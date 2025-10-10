@@ -31,7 +31,6 @@ This repository showcases a complete observability stack implementation that add
 
 ## Table of Contents
 
-- [Architecture Overview](#architecture-overview)
 - [Why Observability Matters](#why-observability-matters)
 - [Prerequisites](#prerequisites)
 - [Step 1: Kubernetes Cluster Setup](#step-1-kubernetes-cluster-setup)
@@ -43,57 +42,6 @@ This repository showcases a complete observability stack implementation that add
 - [Key Learnings](#key-learnings)
 - [Next Steps](#next-steps)
 - [References](#references)
-
----
-
-## Architecture Overview
-
-```mermaid
-graph TB
-    subgraph "Kubernetes Cluster"
-        subgraph "Application Layer"
-            App1[Microservice 1]
-            App2[Microservice 2]
-            App3[Microservice 3]
-        end
-        
-        subgraph "Metrics Collection"
-            Prometheus[Prometheus Server]
-            App1 -->|/metrics endpoint| Prometheus
-            App2 -->|/metrics endpoint| Prometheus
-            App3 -->|/metrics endpoint| Prometheus
-        end
-        
-        subgraph "Logging Pipeline"
-            FluentBit[Fluent Bit DaemonSet]
-            Elasticsearch[Elasticsearch Cluster]
-            App1 -->|stdout/stderr| FluentBit
-            App2 -->|stdout/stderr| FluentBit
-            App3 -->|stdout/stderr| FluentBit
-            FluentBit -->|Forward logs| Elasticsearch
-        end
-        
-        subgraph "Tracing"
-            Jaeger[Jaeger Collector]
-            App1 -->|Traces/Spans| Jaeger
-            App2 -->|Traces/Spans| Jaeger
-            App3 -->|Traces/Spans| Jaeger
-        end
-        
-        subgraph "Visualization Layer"
-            Grafana[Grafana Dashboards]
-            Kibana[Kibana UI]
-            JaegerUI[Jaeger UI]
-            Prometheus -->|PromQL queries| Grafana
-            Elasticsearch -->|Query API| Kibana
-            Jaeger -->|Trace data| JaegerUI
-        end
-    end
-    
-    User[DevOps/SRE Engineer] -->|Access| Grafana
-    User -->|Access| Kibana
-    User -->|Access| JaegerUI
-```
 
 ---
 
